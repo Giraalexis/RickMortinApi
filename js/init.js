@@ -1,8 +1,40 @@
+//Registro del service Worker
+if(navigator.serviceWorker){ //si esta disponible en este navegador
+    if(window.location.href.include("localhost")){
+        navigator.serviceWorker.register("/sw.js");
+    }else
+        //esta en un servidor web
+        navigator.serviceWorker.register("RickMortinApi/sw.js");
+}
+
+
 
 
 window.mostrarPersonaje = function(){
-    console.log(this.personaje);
+    //1 crear molde
+    let molde = document.querySelector(".molde-personaje-sa").cloneNode(true);
+    let personaje = this.personaje;
+    molde.querySelector(".nombre-per").innerText = personaje.name;
+    molde.querySelector(".especie-per").innerText = personaje.species;
+    molde.querySelector(".genero-per").innerText = personaje.gender;
+
+    const icono = molde.querySelector(".icono-estado");
+    if(personaje.status == "Dead"){
+        icono.classList.add("fas","fa-skill-crossbone","text-danger");
+    }else if(personaje.status == "Alive"){
+        icono.classList.add("fab","fa-odnoklassniki","text-primary");
+    }else if(personaje.status == "unknown"){
+        icono.classList.add("fas","fa-question","text-success");
+    }
+
+    molde.querySelector(".imagen-per").src = personaje.image;
+
+    Swal.fire({
+        title: personaje.name,
+        html: molde.innerHTML
+    });
 }
+
 
 window.mostrar = (personajes)=>{
     const molde = document.querySelector(".molde-personaje");
@@ -12,7 +44,7 @@ window.mostrar = (personajes)=>{
         let copia = molde.cloneNode(true);
         copia.querySelector(".nombre-personaje").innerText = p.name;
         copia.querySelector(".imagen-personaje").src = p.image;
-        copia.querySelector(".btn-personaje").personaje = p;
+        copia.querySelector(".btn-personaje").personaje = p; //guarda todos los datos del objeto en el un atributo del button
         copia.querySelector(".btn-personaje").addEventListener('click',window.mostrarPersonaje);
         contenedor.appendChild(copia);
     } 
