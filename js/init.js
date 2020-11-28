@@ -1,6 +1,6 @@
 //Registro del service Worker
 if(navigator.serviceWorker){ //si esta disponible en este navegador
-    if(window.location.href.include("localhost")){
+    if(window.location.href.includes("localhost")){
         navigator.serviceWorker.register("/sw.js");
     }else
         //esta en un servidor web
