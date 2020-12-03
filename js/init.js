@@ -4,7 +4,7 @@ if(navigator.serviceWorker){ //si esta disponible en este navegador
         navigator.serviceWorker.register("/sw.js");
     }else
         //esta en un servidor web
-        navigator.serviceWorker.register("RickMortinApi/sw.js");
+        navigator.serviceWorker.register("/RickMortinApi/sw.js");
 }
 
 
